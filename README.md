@@ -67,6 +67,38 @@ The metadata helps give a good understanding about the existing structure of tar
   Finally, the Plug-in returns the dataframe after re-ordering columns in their correct order. And then the load job appends this data to the target table.
     ![Image](assets/7.PNG)
     ![Image](assets/5.PNG)
+  
+  *:warning: Note - please DO NOT FORGET to update target table metadata*
+    ![Image](assets/8.PNG)
+  
+  
+  Handling of Missing columns :
+  If column(s) are missing from source dataframe, then the plug-in will identify those columns, retreive their datatypes from metadata and accordingly fill in the placeholder values before sending it to the load job.
+  
+  Eg: Continuing the above example, the latest data fetched now is of a student who failed to complete his exam on time and as a result didn't get a score. The JSON response fetched by the extract job is given below - 
+  ```
+  [
+    {
+        “Id” : 4,
+        “First Name” : “Kunal”,
+        “Last Name” : “Mehta”,
+        “Created” : 26/12/2023
+    }
+  ]
+  ```
+  The current target table and source dataframe look like this - 
+    ![Image](assets/9.PNG)
+  
+  The plug-in compares the columns from source dataframe and metadata to detect that **'Score'** and **'Middle Name'** are missing. So it retrieves its datatypes from metadata.  And based on the datatype it identifies what placeholder value needs to be filled for the respective columns in the dataframe.
+    ![Image](assets/11.PNG)
+    ![Image](assets/12.PNG)
+  
+  The plug-in then adds the columns with placeholder values, and re-orders them in accordance with the 'column_index' from metadata.
+    ![Image](assets/13.PNG)
+    
+  Finally, the dataframe returned by plug-in is sent to load job to be appended to the target table.
+    ![Image](assets/14.PNG)
+  
 
 2. Technologies Used
 3. Challenges Faced and Features to be implemented in the future
