@@ -5,6 +5,8 @@ Dynamic Metadata Management is a plug-in which will help its users dynamically a
 - [Overview](README.md#Overview)
   - [Pre-requisites](README.md#Pre-requisites)
   - [How it works](README.md#How-it-works)
+- [How to run the project](README.md#How-to-run-the-project)
+- [Tests](README.md#Tests)
 - [Credits](README.md#Credits)
 
 ## Overview
@@ -111,6 +113,9 @@ The Adaptive Framework code was deeply integrated with the core ingestion code. 
 ## How to run the project
 How to use the plugin?
 
+## Tests
+Test cases and how to run them
+
 ## Credits
 > Krishna
 >
@@ -120,12 +125,8 @@ How to use the plugin?
 >
 > Vineet
 
-
 ## License (Optional)
 
 ## Badges (Optional)
 
-## How to contibute (Optional)
-
-## Tests
-Test cases and how to run them
+## How to conrtibute? (Optional)
