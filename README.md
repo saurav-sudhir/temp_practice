@@ -10,7 +10,7 @@ Dynamic Metadata Management is a plug-in which will help its users dynamically a
 - [Credits](README.md#Credits)
 
 ## Overview
-This tool is inspired from the Adaptive Data Framework used by our Data Engineers at Ingestion Squad in Informa. The framework has significantly reduce development time for ingestion activities. It has helped avoid any extra effort put into modifying tables, config files, metadeta, tiresome email chains, testing of pipelines, and repeation of the entire same steps for prod. Developers can now save hours of their time from an activity of less impact but more effort and put into designing and building meaningful pipelines, extracting data from new sources and growing the dataset for analysts to generate new insights. Developers are now worry free of any corrections to be made due to source related issue increasing overall productivity. 
+This tool is inspired from the Adaptive Data Framework used by our Data Engineers at Ingestion Squad in Informa. The framework has significantly reduced development time for ingestion activities. It has helped avoid any extra effort put into modifying tables, config files, metadata, tiresome email chains, testing of pipelines, and repetition of the entire same steps for prod. Developers can now save hours of their time from an activity of less impact but more effort and put into designing and building meaningful pipelines, extracting data from new sources and growing the dataset for analysts to generate new insights. Developers are now worry free of any corrections to be made due to source related issues increasing overall productivity. 
 ### Pre-requisites
 The plug-in will require metadata about your target table. The metadata should consist of -
   1. column name
