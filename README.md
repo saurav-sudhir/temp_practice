@@ -33,16 +33,41 @@ The metadata helps give a good understanding about the existing structure of tar
 - Process :
   
   In an ETL process, the plugin will be placed inside the transform section. Once data has been extracted from source and converted to a <pandas.DataFrame>, it will be then fed into the plug-in along with target table metadata
-    ![image](https://user-images.githubusercontent.com/46084428/210352003-ddc692b1-fddc-42ed-ac26-a38686676d1f.png)
+    ![Image](assets/1.PNG)
   
   Addition of columns :
   
   When a new data point(s) has been fetched from source, the plug-in will compare the freshly fetched source columns with the existing metadata to detect a new column(s). It will then alter the target table structure to add the new columns. Finally, the plug-in returns the Dataframe to be sent to the Load(Save) part of the code where the dataframe can be appended to the target table.
   
   Eg:
-  A school is storing exam scores details in their DB for admissions procedure. The existing target table looks like this - 
-      ![image](https://user-images.githubusercontent.com/46084428/210493133-4df7193b-b288-4e93-b22e-540b7612545c.png)
-      ![Image](assets/2.png)
+  A school is storing entrance exam score details in their DB. The existing target table is as follows - 
+      ![Image](assets/2.PNG)
+  
+  Their data pipeline fetches new data every data. The latest data (JSON Response) fetched by the extract function is given below -
+  ```
+  [
+    {
+        “Id” : 3,
+        “First Name” : “Vineet”,
+        “Middle Name” : “Topper”,
+        “Last Name” : “Garg”,
+        “Score” : 98.10,
+        “Created” : 25/12/2023
+    }
+  ]
+  ```
+  
+  We can notice that the above JSON has a new data point called **'Middle Name'**. The transform job converts the JSON to <pandas.DataFrame> and passes it as a parameter to the plug-in -
+    ![Image](assets/3.PNG)
+  
+  Based on the content, the dataframe assigns **'object'** as the columns datatype. Using this info, the plug-in then identifies the corresponding DB appropriate datatype (like VARCHAR(65535) for POSTGRES), runs an alter statement - modifying the target table to add the new column.
+    ![Image](assets/6.PNG)
+    ![Image](assets/4.PNG)
+  
+  Finally, the Plug-in returns the dataframe after re-ordering columns in their correct order. And then the load job appends this data to the target table.
+    ![Image](assets/7.PNG)
+    ![Image](assets/5.PNG)
+
 2. Technologies Used
 3. Challenges Faced and Features to be implemented in the future
   
