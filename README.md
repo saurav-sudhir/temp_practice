@@ -95,11 +95,8 @@ The metadata helps give a good understanding about the existing structure of tar
   The current target table and source dataframe look like this - 
     ![Image](assets/9.PNG)
   
-  The plug-in compares the columns from source dataframe and metadata to detect that **'Score'** and **'Middle Name'** are missing. So it retrieves its datatypes from metadata.  And based on the datatype it identifies what placeholder value needs to be filled for the respective columns in the dataframe.
-    ![Image](assets/11.PNG)
-    ![Image](assets/12.PNG)
-  
-  The plug-in then adds the columns with placeholder values, and re-orders them in accordance with the 'column_index' from metadata.
+  The plug-in compares the columns from source dataframe and metadata to detect that **'Score'** and **'Middle Name'** are missing. It will then add the missing columns and re-order them in accordance with the 'column_index' from metadata.
+      ![Image](assets/11.PNG)
     ![Image](assets/13.PNG)
     
   Finally, the dataframe returned by plug-in is sent to load job to be appended to the target table.
