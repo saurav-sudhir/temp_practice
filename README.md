@@ -1,5 +1,5 @@
 # Dynamic Metadata Management
-Dynamic Metadata Management is a plug-in which will help its users dynamically add new columns(data points) coming from source to the target table. It will also help handle missing columns before saving data to destination. 
+Dynamic Metadata Management is a plug-in that enables users to dynamically add new columns (data points) from the source to the target table. Before storing data to the destination, it will also assist in handling missing columns. 
 
 ## Index
 - [Overview](README.md#Overview)
@@ -10,27 +10,29 @@ Dynamic Metadata Management is a plug-in which will help its users dynamically a
 - [Credits](README.md#Credits)
 
 ## Overview
-This tool is inspired from the Adaptive Data Framework used by our Data Engineers at Ingestion Squad in Informa. The framework has significantly reduced development time for ingestion activities. It has helped avoid any extra effort put into modifying tables, config files, metadata, tiresome email chains, testing of pipelines, and repetition of the entire same steps for prod. Developers can now save hours of their time from an activity of less impact but more effort and put into designing and building meaningful pipelines, extracting data from new sources and growing the dataset for analysts to generate new insights. Developers are now worry free of any corrections to be made due to source related issues increasing overall productivity. 
+The DMM framework will significantly reduced development time for ingestion activities. It will help to avoid any extra effort put into modifying tables, config files, metadata, tiresome email chains, testing of pipelines, and repetition of the entire same steps for prod. Developers can now save hours of their time from an activity of less impact but more effort and put into designing and building meaningful pipelines, extracting data from new sources and growing the dataset for analysts to generate new insights. Developers can now be worry free of any corrections to be made due to source related issues increasing overall productivity.
 ### Pre-requisites
-The plug-in will require metadata about your target table. The metadata should consist of -
+The plug-in will require metadata about your target table. You will need to pass the connection for this metadata table to the DMM plug-in as a parameter. The metadata should at least consist of -
   1. column name
   2. column data type
   3. index  (order/placement of columns in target table)
 ### How it works
 The metadata helps give a good understanding about the existing structure of target table. The code will then use this information to- 
 - detect new datapoints/columns from source and alter the table accordingly
-- detect missing records and identify what type of null value to be filled based on column data type
+- detect missing records and identify what type of null value to be filled based on the column data type
 #### Design
 - Input : 
   ```
   - Source data converted to <pandas.DataFrame>
-  - Pre-requisite metadata
+  - Pre-requisite metadata table connection
+  - Target table connection
+  - Name of the table
   ```
 
 
 - Output :
   ```
-  - Modified pandas dataframe to be saved at destination as table
+  - match_columns() returns Modified pandas dataframe to be saved at destination
   ```
 
 - Process :
@@ -40,7 +42,7 @@ The metadata helps give a good understanding about the existing structure of tar
   
   Addition of columns :
   
-  When a new data point(s) has been fetched from source, the plug-in will compare the freshly fetched source columns with the existing metadata to detect a new column(s). It will then alter the target table structure to add the new columns. Finally, the plug-in returns the Dataframe to be sent to the Load(Save) part of the code where the dataframe can be appended to the target table.
+  When a new data point(s) has been fetched from source, the plug-in will compare the freshly fetched source columns with the existing metadata to detect new column(s). It will then identify their data types and alter the target table structure to add these new columns. Finally, the plug-in returns the Dataframe to be sent to the Load(Save) part of the code where the dataframe will get appended to the target table.
   
   Eg:
   A school is storing entrance exam score details in their DB. The existing target table is as follows - 
@@ -63,15 +65,15 @@ The metadata helps give a good understanding about the existing structure of tar
   We can notice that the above JSON has a new data point called **'Middle Name'**. The transform job converts the JSON to <pandas.DataFrame> and passes it as a parameter to the plug-in -
     ![Image](assets/3.PNG)
   
-  Based on the content, the dataframe assigns **'object'** as the columns datatype. Using this info, the plug-in then identifies the corresponding DB appropriate datatype (like VARCHAR(65535) for POSTGRES), runs an alter statement - modifying the target table to add the new column.
+  Based on the content, the dataframe assigns **'object'** as the datatype for **'Middle Name'** . Using this info, the plug-in then identifies the corresponding DB appropriate datatype (like VARCHAR(*char_length*) for MySQL), runs an alter statement - modifying the target table to add the new column.
     ![Image](assets/6.PNG)
     ![Image](assets/4.PNG)
   
-  Finally, the Plug-in returns the dataframe after re-ordering columns in their correct order. And then the load job appends this data to the target table.
+  The Plug-in then returns the dataframe after re-ordering columns in their correct order. Finally, the load job appends this data to the target table.
     ![Image](assets/7.PNG)
     ![Image](assets/5.PNG)
   
-  *:warning: Note - please DO NOT FORGET to update target table metadata*
+  *Note - The DMM plugin also updates the metadata before returning the dataframe*
     ![Image](assets/8.PNG)
     
     
