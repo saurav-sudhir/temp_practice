@@ -96,8 +96,7 @@ The metadata helps give a good understanding about the existing structure of tar
     ![Image](assets/9.PNG)
   
   The plug-in compares the columns from source dataframe and metadata to detect that **'Score'** and **'Middle Name'** are missing. It will then add the missing columns and re-order them in accordance with the 'column_index' from metadata.
-      ![Image](assets/11.PNG)
-    ![Image](assets/13.PNG)
+    ![Image](assets/11.PNG)
     
   Finally, the dataframe returned by plug-in is sent to load job to be appended to the target table.
     ![Image](assets/14.PNG)
@@ -105,11 +104,13 @@ The metadata helps give a good understanding about the existing structure of tar
 
 #### Technologies Used
 JUST python :smile:
+Python Libraries used are - 
+1. pandas
+2. numpy
+3. json
+4. uuid
 
-#### Challenges Faced and Features to be implemented in the future
-The Adaptive Framework code was deeply integrated with the core ingestion code. So, designing a plug-in and modularization took effort and planning. Since the code was custom made for Informa, generalizing the plug-in was also a matter of concern. We had to take some hard decisions by setting some pre-requisites. We hope in the future we are able to further build on it and make it adaptible and compatible with all DBs/sources.
-  
-## How to run the project
+## How to code works
 How to use the plugin?
 
 ## Tests
