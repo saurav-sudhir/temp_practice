@@ -12,11 +12,12 @@ Built for data engineers and developers, Dynamic Metadata Management is a plug-i
   - [Pre-requisites](README.md#Pre-requisites)
   - [How it works](README.md#How-it-works)
 - [Code in Depth](README.md#Code-in-Depth)
+- [Tests](README.md#Tests)
 - [Credits](README.md#Credits)
 
 ## Overview
 In an ETL process, the plugin will be placed inside the transform section of the pipeline. Once data has been extracted from source and converted to a <pandas.DataFrame>, it will be then fed into the plug-in along with target table metadata. The plug-in will then carry out any required adjustments prior to supplying dataframe to the load task.
-    ![Image](assets/1.PNG)
+    ![Image](images/1.PNG)
 
 The DMM framework will significantly reduce development time for ingestion activities. It will assist in avoiding any additional work required to alter tables, configuration files, metadata, tedious email chains, pipeline testing, and repetition of the same steps for production. Developers may now dedicate their time on useful pipeline design and construction, data extraction from new sources, and dataset expansion for analysts to produce fresh insights instead of spending that time on a task that has less impact but requires more effort. The overall level of productivity increases as developers no longer need to worry about making any adjustments owing to source-schema-related problems.
 ### Technologies Used
@@ -51,7 +52,7 @@ The metadata aids in providing a clear idea of the target table's current struct
   
   Eg:
   A school is storing entrance exam score details in their DB. The existing target table is as follows - 
-      ![Image](assets/2.PNG)
+      ![Image](images/2.PNG)
   
   Their data pipeline fetches new data every data. The latest data (JSON Response) fetched by the extract function is given below -
   ```
@@ -68,18 +69,18 @@ The metadata aids in providing a clear idea of the target table's current struct
   ```
   
   We can notice that the above JSON has a new data point called **'Middle Name'**. The transform job converts the JSON to <pandas.DataFrame> and passes it as a parameter to the plug-in -
-    ![Image](assets/3.PNG)
+    ![Image](images/3.PNG)
   
   Based on the content, the dataframe assigns **'object'** as the datatype for **'Middle Name'** . Using this info, the plug-in then identifies the corresponding DB appropriate datatype (like VARCHAR(*char_length*) for MySQL), runs an alter statement - modifying the target table to add the new column.
-    ![Image](assets/6.PNG)
-    ![Image](assets/15.PNG)
+    ![Image](images/6.PNG)
+    ![Image](images/15.PNG)
   
   The Plug-in then returns the dataframe after re-ordering columns in their correct order. Finally, the load job appends this data to the target table.
-    ![Image](assets/7.PNG)
-    ![Image](assets/16.PNG)
+    ![Image](images/7.PNG)
+    ![Image](images/16.PNG)
   
   *Note - The DMM plugin also updates the metadata before returning the dataframe*
-    ![Image](assets/8.PNG)
+    ![Image](images/8.PNG)
     
     
   Handling of Missing columns :
@@ -98,13 +99,13 @@ The metadata aids in providing a clear idea of the target table's current struct
   ]
   ```
   The current target table and source dataframe look like this - 
-    ![Image](assets/17.PNG)
+    ![Image](images/17.PNG)
   
   The plug-in compares the columns from source dataframe and metadata to detect that **'Score'** and **'Middle Name'** are missing. It will then add the missing columns and re-order them in accordance with the 'column_index' from metadata.
-    ![Image](assets/11.PNG)
+    ![Image](images/11.PNG)
     
   Finally, the dataframe returned by plug-in is sent to load job to be appended to the target table.
-    ![Image](assets/14.PNG)
+    ![Image](images/14.PNG)
   
 
 ## Code in Depth
