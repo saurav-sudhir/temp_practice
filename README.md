@@ -1,5 +1,5 @@
 # Dynamic Metadata Management
-Dynamic Metadata Management is a plug-in coded in python that was built for data engineers and developers, so that they can add the following features to their data pipelines -
+Built for data engineers and developers, Dynamic Metadata Management is a plug-in that was created in Python that allows them to add the following functionalities to their data pipelines:
 1. Auto capture of additional/missing source data keys/columns.
 2. Table structure and data format handling.
 4. Proactively identify, avoid and handle job failures due to metadata changes.
