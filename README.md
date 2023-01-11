@@ -12,7 +12,6 @@ Built for data engineers and developers, Dynamic Metadata Management is a plug-i
   - [Pre-requisites](README.md#Pre-requisites)
   - [How it works](README.md#How-it-works)
 - [Code in Depth](README.md#Code-in-Depth)
-- [Tests](README.md#Tests)
 - [Credits](README.md#Credits)
 
 ## Overview
