@@ -1,26 +1,35 @@
 # Dynamic Metadata Management
-Dynamic Metadata Management is a plug-in that enables users to dynamically add new columns (data points) from the source to the target table. Before storing data to the destination, it will also assist in handling missing columns. 
+Dynamic Metadata Management is a plug-in coded in python that was built for data engineers and developers, so that they can add the following features to their data pipelines -
+1. Auto capture of additional/missing source data keys/columns.
+2. Table structure and data format handling.
+4. Proactively identify, avoid and handle job failures due to metadata changes.
+5. Applicable across structure & semi-structure data set
+6. Open-source code, customizable for cloud agnostic platform.
 
 ## Index
 - [Overview](README.md#Overview)
+  - [Technologies Used](README.md#Technologies-Used)
   - [Pre-requisites](README.md#Pre-requisites)
   - [How it works](README.md#How-it-works)
-- [How to run the project](README.md#How-to-run-the-project)
+- [Code in Depth](README.md#Code-in-Depth)
 - [Tests](README.md#Tests)
 - [Credits](README.md#Credits)
 
 ## Overview
-The DMM framework will significantly reduced development time for ingestion activities. It will help to avoid any extra effort put into modifying tables, config files, metadata, tiresome email chains, testing of pipelines, and repetition of the entire same steps for prod. Developers can now save hours of their time from an activity of less impact but more effort and put into designing and building meaningful pipelines, extracting data from new sources and growing the dataset for analysts to generate new insights. Developers can now be worry free of any corrections to be made due to source related issues increasing overall productivity.
+In an ETL process, the plugin will be placed inside the transform section of the pipeline. Once data has been extracted from source and converted to a <pandas.DataFrame>, it will be then fed into the plug-in along with target table metadata. The plug-in will then carry out any required adjustments prior to supplying dataframe to the load task.
+    ![Image](assets/1.PNG)
+
+The DMM framework will significantly reduce development time for ingestion activities. It will assist in avoiding any additional work required to alter tables, configuration files, metadata, tedious email chains, pipeline testing, and repetition of the same steps for production. Developers may now dedicate their time on useful pipeline design and construction, data extraction from new sources, and dataset expansion for analysts to produce fresh insights instead of spending that time on a task that has less impact but requires more effort. The overall level of productivity increases as developers no longer need to worry about making any adjustments owing to source-schema-related problems.
+### Technologies Used
+python
 ### Pre-requisites
-The plug-in will require metadata about your target table. You will need to pass the connection for this metadata table to the DMM plug-in as a parameter. The metadata should at least consist of -
+The plug-in will require metadata about your target table. You will need to pass the connection for this metadata table to the DMM plug-in as a parameter. The metadata must at the very least include:
   1. column name
   2. column data type
   3. index  (order/placement of columns in target table)
+  
+The metadata aids in providing a clear idea of the target table's current structure. The code will then make use of this data to find new datapoints and columns in the source and change the table accordingly. It will also utilise this data to find missing records and determine what kind of null value should be filled based on the data type of the column.
 ### How it works
-The metadata helps give a good understanding about the existing structure of target table. The code will then use this information to- 
-- detect new datapoints/columns from source and alter the table accordingly
-- detect missing records and identify what type of null value to be filled based on the column data type
-#### Design
 - Input : 
   ```
   - Source data converted to <pandas.DataFrame>
@@ -36,9 +45,6 @@ The metadata helps give a good understanding about the existing structure of tar
   ```
 
 - Process :
-  
-  In an ETL process, the plugin will be placed inside the transform section. Once data has been extracted from source and converted to a <pandas.DataFrame>, it will be then fed into the plug-in along with target table metadata
-    ![Image](assets/1.PNG)
   
   Addition of columns :
   
@@ -102,15 +108,7 @@ The metadata helps give a good understanding about the existing structure of tar
     ![Image](assets/14.PNG)
   
 
-#### Technologies Used
-JUST python :smile:
-Python Libraries used are - 
-1. pandas
-2. numpy
-3. json
-4. uuid
-
-## How the code works
+## Code in Depth
 To explain how and where to use the plug-in, we have developed example extract, transform and load jobs. The plug-in has been integrated into the transform part of the code. 
 
 There are 4 python files involved in the code section
@@ -305,9 +303,3 @@ Load :
 > Saurav
 >
 > Vineet
-
-## License (Optional)
-
-## Badges (Optional)
-
-## How to conrtibute? (Optional)
